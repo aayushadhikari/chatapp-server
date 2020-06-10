@@ -24,13 +24,12 @@ io.on("connection", (socket) => {
     socket.broadcast
       .to(user.room)
       .emit("message", { user: "admin", text: `${user.name}, has joined!` });
-    socket.join(users.room);
+    socket.join(user.room);
     callback();
   });
 
   socket.on("sendMessage", (message, callback) => {
     const user = getUser(socket.id);
-
     io.to(user.room).emit("message", { user: user.name, text: message });
     callback();
   });
